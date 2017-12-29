@@ -7,6 +7,6 @@ module.exports = async (deployer, network) => {
   deployer.deploy(Ownable);
   deployer.link(Ownable, ElephanteumStorage);
   deployer.link(Ownable, ElephanteumCore);
-  deployer.deploy(ElephanteumStorage); 
-  await deployer.deploy(ElephanteumCore, ElephanteumStorage.address);
+  await deployer.deploy(ElephanteumStorage); 
+  deployer.deploy(ElephanteumCore, ElephanteumStorage.address);
 };  
