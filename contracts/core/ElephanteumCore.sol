@@ -13,11 +13,14 @@ contract ElephanteumCore is IElephanteumCore, Ownable {
     event ElephantTransfered(address from, address to, uint256 elephantIndex);
 
     function ElephanteumCore(address _eStorage) public payable {
-        eStorage = ElephanteumStorage(_eStorage);
-        eStorage.setTotalSupply(100);
-        eStorage.setElephantsRemainingToAssign(100);
-        eStorage.setName("Elephanteum");
-        eStorage.setSymbol("EPH"); 
+        eStorage = ElephanteumStorage(_eStorage);     
+    }
+
+    function init (bytes32 _name, bytes32 _symbol, uint _supply) public onlyOwner {
+        eStorage.setTotalSupply(_supply);
+        eStorage.setElephantsRemainingToAssign(_supply);
+        eStorage.setName(_name);
+        eStorage.setSymbol(_symbol);
     }
 
     function getElephant(uint elephantIndex) public onlyOwner {
@@ -51,7 +54,6 @@ contract ElephanteumCore is IElephanteumCore, Ownable {
         ElephantTransfered(msg.sender, to, elephantIndex);
     }
 
-   
     function transferStorage(address _newCore) public onlyOwner {
         eStorage.transferOwnership(_newCore);
     }
