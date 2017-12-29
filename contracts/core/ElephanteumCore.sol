@@ -12,7 +12,7 @@ contract ElephanteumCore is IElephanteumCore, Ownable {
     event ElephantAssigned(address to, uint256 elephantIndex);
     event ElephantTransfered(address from, address to, uint256 elephantIndex);
 
-    function ElephanteumCore(address _eStorage) public payable onlyOwner {
+    function ElephanteumCore(address _eStorage) public payable {
         eStorage = ElephanteumStorage(_eStorage);
         eStorage.setTotalSupply(100);
         eStorage.setElephantsRemainingToAssign(100);
