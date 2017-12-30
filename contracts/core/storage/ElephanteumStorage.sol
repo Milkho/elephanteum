@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity  0.4.18;
 
 import "../common/Ownable.sol";
 
@@ -13,8 +13,28 @@ contract ElephanteumStorage is Ownable {
 
     mapping (uint => address) public elephantIndexToAddress;
 
-    mapping (address => uint256) public balanceOf;
+    mapping (address => uint256) public balanceOf;  
 
+    struct ElephantOffer {
+        bool isForSale;
+        uint elephantIndex;
+        address seller;
+        uint minValue;     
+        address onlySellTo;
+    }
+
+    struct ElephantBid {
+        bool hasBid;
+        uint elephantIndex;
+        address bidder;
+        uint value;
+    }
+
+    mapping (uint => ElephantOffer) public elephantsOfferedForSale;
+
+    mapping (uint => ElephantBid) public elephantBids;
+
+    mapping (address => uint) public pendingWithdrawals;
 
     function setName(bytes32 _name) onlyOwner external {
         name = _name;
@@ -39,4 +59,17 @@ contract ElephanteumStorage is Ownable {
     function setBalanceForAddress(address _owner, uint _newBalance) onlyOwner external {
         balanceOf[_owner] = _newBalance;
     }
+
+    function setIsElephantForSale(bool _isForSale, uint _elephantIndex, address _seller, uint _minValue, address _onlySellTo) onlyOwner external {
+        elephantsOfferedForSale[_elephantIndex] = ElephantOffer(_isForSale, _elephantIndex, _seller, _minValue, _onlySellTo);
+    }
+
+    function setBidOnElephant(bool _hasBid, uint _elephantIndex, address _bidder, uint _value) onlyOwner external {
+        elephantBids[_elephantIndex] = ElephantBid(_hasBid, _elephantIndex,  _bidder, _value);
+    }
+
+    function setPendingWithdrawalForAddress(address _owner, uint _newValue) onlyOwner external {
+        pendingWithdrawals[_owner] = _newValue;
+    }
+
 }   
