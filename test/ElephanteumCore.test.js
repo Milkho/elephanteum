@@ -30,13 +30,13 @@ contract('ElephanteumCore', ([owner, user]) => {
   it('Should give elephants', async () => {
     let elephantIndex = 0, elephantIncorrectIndex = 100;
 
-    await eCore.getElephant(elephantIndex);
+    await eCore.getElephant(owner, elephantIndex);
     
     let elephantOwner = await eStorage.elephantIndexToAddress.call(elephantIndex);
     let remainingElephants = await eStorage.elephantsRemainingToAssign.call();
 
     //should throw on index = 100 because max index = 99
-    await expectThrow(eCore.getElephant(elephantIncorrectIndex));
+    await expectThrow(eCore.getElephant(owner, elephantIncorrectIndex));
 
     assert.equal(owner, elephantOwner, "owner account must be owner of the elephant");
     assert.equal(remainingElephants.toNumber(), supply-1, "there must be 99 elephants left");
@@ -45,17 +45,17 @@ contract('ElephanteumCore', ([owner, user]) => {
   it('Should transfer elephants', async () => {
     let myElephantIndex = 1, notMyElephantIndex = 2; 
 
-    await eCore.getElephant(myElephantIndex);
+    await eCore.getElephant(owner, myElephantIndex);
     
-    await eCore.transferElephant(user, myElephantIndex);
+    await eCore.transferElephant(owner, user, myElephantIndex);
 
     let elephantOwner = await eStorage.elephantIndexToAddress.call(myElephantIndex);
 
     //should throw because this elephant doesn't belong to "owner"
-    await expectThrow(eCore.transferElephant(user, notMyElephantIndex));
+    await expectThrow(eCore.transferElephant(owner, user, notMyElephantIndex));
 
     //should throw because this elephant already has been transfered to user
-    await expectThrow(eCore.transferElephant(user, myElephantIndex));
+    await expectThrow(eCore.transferElephant(owner, user, myElephantIndex));
 
     assert.equal(user, elephantOwner, "user account must be owner of the elephant");
   });

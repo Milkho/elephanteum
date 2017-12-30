@@ -7,7 +7,7 @@ import "../../storage/ElephanteumStorage.sol";
 
 contract ElephanteumCore is IElephanteumCore, Ownable {
 
-    ElephanteumStorage public eStorage;
+    ElephanteumStorage eStorage;
 
     event ElephantAssigned(address to, uint256 elephantIndex);
     event ElephantTransfered(address from, address to, uint256 elephantIndex);
@@ -16,46 +16,46 @@ contract ElephanteumCore is IElephanteumCore, Ownable {
         eStorage = ElephanteumStorage(_eStorage);     
     }
 
-    function init(bytes32 _name, bytes32 _symbol, uint _supply) public onlyOwner {
-        eStorage.setTotalSupply(_supply);
-        eStorage.setElephantsRemainingToAssign(_supply);
-        eStorage.setName(_name);
-        eStorage.setSymbol(_symbol);
+    function init(bytes32 name, bytes32 symbol, uint supply) onlyOwner external {
+        eStorage.setTotalSupply(supply);
+        eStorage.setElephantsRemainingToAssign(supply);
+        eStorage.setName(name);
+        eStorage.setSymbol(symbol);
     }
 
-    function getElephant(uint elephantIndex) public onlyOwner {
+    function getElephant(address to, uint elephantIndex) onlyOwner external {
         require(eStorage.elephantsRemainingToAssign() > uint(0));
         require(eStorage.elephantIndexToAddress(elephantIndex) == address(0));
         require(elephantIndex < eStorage.totalSupply());
 
-        eStorage.setOwnerForIndex(msg.sender, elephantIndex);
+        eStorage.setOwnerForIndex(to, elephantIndex);
 
-        uint currBalance = eStorage.balanceOf(msg.sender);
-        eStorage.setBalanceForAddress(msg.sender, currBalance++);
+        uint currBalance = eStorage.balanceOf(to);
+        eStorage.setBalanceForAddress(to, currBalance++);
 
         uint remainingElephants = eStorage.elephantsRemainingToAssign();
-        eStorage.setElephantsRemainingToAssign(remainingElephants-=1);
+        eStorage.setElephantsRemainingToAssign(remainingElephants -= 1);
 
-        ElephantAssigned(msg.sender, elephantIndex);
+        ElephantAssigned(to, elephantIndex);
     }
 
-    function transferElephant(address to, uint elephantIndex) public onlyOwner {
-        require(eStorage.elephantIndexToAddress(elephantIndex) == msg.sender);
+    function transferElephant(address from, address to, uint elephantIndex) onlyOwner external {
+        require(eStorage.elephantIndexToAddress(elephantIndex) == from);
         require(elephantIndex < eStorage.totalSupply());
 
         eStorage.setOwnerForIndex(to, elephantIndex);
 
-        uint senderCurrBalance = eStorage.balanceOf(msg.sender);
-        eStorage.setBalanceForAddress(msg.sender, senderCurrBalance--);
+        uint senderCurrBalance = eStorage.balanceOf(from);
+        eStorage.setBalanceForAddress(from, senderCurrBalance--);
 
         uint receiverCurrBalance = eStorage.balanceOf(to);
         eStorage.setBalanceForAddress(to, receiverCurrBalance++);
 
-        ElephantTransfered(msg.sender, to, elephantIndex);
+        ElephantTransfered(from, to, elephantIndex);
     }
 
-    function transferStorage(address _newCore) public onlyOwner {
-        eStorage.transferOwnership(_newCore);
+    function transferStorage(address newCore) onlyOwner external {
+        eStorage.transferOwnership(newCore);
     }
 
 }
