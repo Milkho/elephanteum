@@ -1,8 +1,8 @@
 pragma solidity ^0.4.18;
 
-import "./common/Ownable.sol";
+import "../../common/Ownable.sol";
 import "./IElephanteumCore.sol";
-import "./storage/ElephanteumStorage.sol";
+import "../../storage/ElephanteumStorage.sol";
 
 
 contract ElephanteumCore is IElephanteumCore, Ownable {
@@ -16,7 +16,7 @@ contract ElephanteumCore is IElephanteumCore, Ownable {
         eStorage = ElephanteumStorage(_eStorage);     
     }
 
-    function init (bytes32 _name, bytes32 _symbol, uint _supply) public onlyOwner {
+    function init(bytes32 _name, bytes32 _symbol, uint _supply) public onlyOwner {
         eStorage.setTotalSupply(_supply);
         eStorage.setElephantsRemainingToAssign(_supply);
         eStorage.setName(_name);
@@ -25,7 +25,7 @@ contract ElephanteumCore is IElephanteumCore, Ownable {
 
     function getElephant(uint elephantIndex) public onlyOwner {
         require(eStorage.elephantsRemainingToAssign() > uint(0));
-        require(eStorage.elephantIndexToAddress(elephantIndex) != address(0));
+        require(eStorage.elephantIndexToAddress(elephantIndex) == address(0));
         require(elephantIndex < eStorage.totalSupply());
 
         eStorage.setOwnerForIndex(msg.sender, elephantIndex);
@@ -34,7 +34,7 @@ contract ElephanteumCore is IElephanteumCore, Ownable {
         eStorage.setBalanceForAddress(msg.sender, currBalance++);
 
         uint remainingElephants = eStorage.elephantsRemainingToAssign();
-        eStorage.setElephantsRemainingToAssign(remainingElephants--);
+        eStorage.setElephantsRemainingToAssign(remainingElephants-=1);
 
         ElephantAssigned(msg.sender, elephantIndex);
     }
