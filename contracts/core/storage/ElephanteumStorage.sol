@@ -1,4 +1,4 @@
-pragma solidity  0.4.18;
+pragma solidity ^0.4.18;
 
 import "../common/Ownable.sol";
 
@@ -55,7 +55,7 @@ contract ElephanteumStorage is Ownable {
     function setOwnerForIndex(address _newOwner, uint _elephantIndex) onlyOwner external {
         elephantIndexToAddress[_elephantIndex] = _newOwner;
     }
-
+    
     function setBalanceForAddress(address _owner, uint _newBalance) onlyOwner external {
         balanceOf[_owner] = _newBalance;
     }

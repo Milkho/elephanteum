@@ -7,7 +7,7 @@ interface IElephanteumAdvancedCore {
 
     function getElephant(address to, uint elephantIndex) external;
     function transferElephant(address from, address to, uint elephantIndex) external;
-
+    
     function offerForSale(address from, uint elephantIndex, uint minSalePriceInWei, address toAddress) external;
     function setNoLongerForSale(address from, uint elephantIndex) external;
 
