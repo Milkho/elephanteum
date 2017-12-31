@@ -1,11 +1,11 @@
 pragma solidity ^0.4.18;
 
-import "../../common/Ownable.sol";
+import "../common/Ownable.sol";
 import "./IElephanteumCore.sol";
-import "../../storage/ElephanteumStorage.sol";
+import "../storage/ElephanteumStorage.sol";
 
 
-contract ElephanteumCore is IElephanteumCore, Ownable {
+contract ElephanteumCore is Ownable,  IElephanteumCore {
 
     ElephanteumStorage eStorage;
 
@@ -53,6 +53,18 @@ contract ElephanteumCore is IElephanteumCore, Ownable {
 
         ElephantTransfered(from, to, elephantIndex);
     }
+
+    function offerForSale(address from, uint elephantIndex, uint minSalePriceInWei, address toAddress) onlyOwner external {}
+
+    function setNoLongerForSale(address from, uint elephantIndex) onlyOwner external {}
+
+    function enterBid(address from, uint elephantIndex) onlyOwner external payable {}
+    
+    function acceptBid(address from, uint elephantIndex, uint minPrice) onlyOwner external {}
+
+    function withdrawBid(address to, uint elephantIndex) onlyOwner external {}
+
+    function withdraw(address to) onlyOwner external {}
 
     function transferStorage(address newCore) onlyOwner external {
         eStorage.transferOwnership(newCore);

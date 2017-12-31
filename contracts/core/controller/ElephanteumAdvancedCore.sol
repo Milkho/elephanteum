@@ -1,12 +1,12 @@
 pragma solidity ^0.4.18;
 
 
-import "../../common/Ownable.sol";
-import "./IElephanteumAdvancedCore.sol";
-import "../../storage/ElephanteumStorage.sol";
+import "../common/Ownable.sol";
+import "./IElephanteumCore.sol";
+import "../storage/ElephanteumStorage.sol";
 
 
-contract ElephanteumAdvancedCore is IElephanteumAdvancedCore, Ownable {
+contract ElephanteumAdvancedCore is Ownable, IElephanteumCore {
 
     ElephanteumStorage eStorage;
 

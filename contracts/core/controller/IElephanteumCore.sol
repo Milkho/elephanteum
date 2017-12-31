@@ -1,9 +1,7 @@
 pragma solidity ^0.4.18;
 
 
-//extends "../basic/IElephanteumCore.sol"
-//unfortunatelly, interfaces cannot inherit in solidity
-interface IElephanteumAdvancedCore {
+interface IElephanteumCore {
 
     function getElephant(address to, uint elephantIndex) external;
     function transferElephant(address from, address to, uint elephantIndex) external;
