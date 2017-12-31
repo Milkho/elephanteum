@@ -16,16 +16,11 @@ In this time, more advanced controller, called _ElephanteumAdvancedCore_ has add
 ## How to test?
 
 For now, I tested project only in testrpc.
-To run test you must have [Truffle](https://github.com/trufflesuite/truffle) and [TestRPC](https://github.com/trufflesuite/ganache-cli)    
-Then run (in separate terminal/console window)   
+To run test you must have [Truffle](https://github.com/trufflesuite/truffle) and [TestRPC](https://www.npmjs.com/package/ethereumjs-testrpc) installed.      
+Start TestRPC running (in separate window) command  
 
      testrpc   
      
 And after that launch tests running from the app dir command 
 
      truffle test --network testrpc --reset --compile
-   
-## Where are docs?
-
-I will write the docs for the code soon. Honestly.
-
