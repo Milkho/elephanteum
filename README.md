@@ -2,7 +2,7 @@
 ## What is it?
 
 __Elephanteum__ is an elephant market where you can get some virtual elephants (for free).    
-When all elephants will distributed, you can sell your elephants on auction with certain minimum price.
+When all elephants will be distributed, you can sell your elephants on auction with certain minimum price.
 
 ## What's the point?
 
@@ -16,11 +16,11 @@ In this time, more advanced controller, called _ElephanteumAdvancedCore_ has add
 ## How to test?
 
 For now, I tested project only in testrpc.
-To run test you must have [Truffle](https://github.com/trufflesuite/truffle) and [TestRPC](https://www.npmjs.com/package/ethereumjs-testrpc) installed.      
-Start TestRPC running (in separate window) command  
+To run tests you must have [Truffle](https://github.com/trufflesuite/truffle) and [TestRPC](https://www.npmjs.com/package/ethereumjs-testrpc) installed.      
+Start TestRPC by running  
 
      testrpc   
      
-And after that launch tests running from the app dir command 
+And after that launch tests by running from the app dir command 
 
      truffle test --network testrpc --reset --compile
