@@ -66,8 +66,12 @@ contract ElephanteumCore is Ownable,  IElephanteumCore {
 
     function withdraw(address to) onlyOwner external {}
 
-    function transferStorage(address newCore) onlyOwner external {
-        eStorage.transferOwnership(newCore);
+    function transferStorage(address _newCore) onlyOwner external {
+        eStorage.transferOwnership(_newCore);
+        IElephanteumCore newCore = IElephanteumCore(_newCore);
+        newCore.transfer(this.balance);
     }
+
+    function () payable external {}
 
 }

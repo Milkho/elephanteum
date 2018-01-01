@@ -18,5 +18,7 @@ interface IElephanteumCore {
     function withdraw(address to) external;
 
     function transferStorage(address newCore) external;
+    
+    function () payable external;
 
 }

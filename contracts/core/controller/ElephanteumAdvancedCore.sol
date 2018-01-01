@@ -82,9 +82,11 @@ contract ElephanteumAdvancedCore is Ownable, IElephanteumCore {
     }
 
     function enterBid(address from, uint elephantIndex) onlyOwner external payable {
+        BidEntered(elephantIndex, msg.value, from);
         require(eStorage.elephantsRemainingToAssign() == uint(0));
         require(elephantIndex < eStorage.totalSupply());             
         require(eStorage.elephantIndexToAddress(elephantIndex) != from);
+
 
         bool bidHasBid;
         uint bidElephantIndex;
@@ -163,8 +165,11 @@ contract ElephanteumAdvancedCore is Ownable, IElephanteumCore {
         to.transfer(bidValue);
     }
 
-    function transferStorage(address newCore) onlyOwner external {
-        eStorage.transferOwnership(newCore);
+     function transferStorage(address _newCore) onlyOwner external {
+        eStorage.transferOwnership(_newCore);
+        IElephanteumCore newCore = IElephanteumCore(_newCore);
+        newCore.transfer(this.balance);
     }
 
+    function () payable external {}
 }
