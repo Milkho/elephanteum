@@ -140,6 +140,8 @@ contract ElephanteumAdvancedCore is Ownable, IElephanteumCore {
 
         uint amount = eStorage.pendingWithdrawals(to);
 
+        // We have to zero the pending refund before
+        // sending to prevent re-entrancy attacks
         eStorage.setPendingWithdrawalForAddress(to, uint(0));
         to.transfer(amount);
     }
@@ -158,8 +160,9 @@ contract ElephanteumAdvancedCore is Ownable, IElephanteumCore {
 
         require(bidBidder == to);
 
+        // We have to zero the pending refund before
+        // sending to prevent re-entrancy attacks
         eStorage.setBidOnElephant(false, elephantIndex, address(0x0), uint(0));
-
         to.transfer(bidValue);
     }
 

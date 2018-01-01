@@ -7,11 +7,10 @@ When all elephants will be distributed, you can sell your elephants on auction w
 ## What's the point?
 
 This app is written to demostrate possibility of upgrading smart contracts in Solidity.   
-For this reason the app contains two controllers that can operate with one storage and transfer it to each other.  
+For this reason the app contains two controllers that can operate with one storage and proxy contract, which manages which contract has access to storage.  
 
 
-Basic controller, called  _ElephanteumCore_   has only functions for getting and trasfering your elephants.
-In this time, more advanced controller, called _ElephanteumAdvancedCore_ has additional functions for auction selling, bidding and withdrawing your balances.
+In order to show benefits of this architecture approach, first controller, called  _ElephanteumCore_   has functions that has security vulnerabities (open for re-entrancy attacks). In this time, other controller, called _ElephanteumAdvancedCore_ has fixed implementation. We can easily replace deployed controller that has vulnerabities by new without needing to replace proxy contract.
 
 ## How to test?
 
