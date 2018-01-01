@@ -10,8 +10,8 @@ contract ElephanteumProxy is Ownable {
 
     IElephanteumCore public eCore;
 
-    function ElephanteumProxy(IElephanteumCore _eCore) public payable {
-        eCore = IElephanteumCore(_eCore);     
+    function ElephanteumProxy(address coreAddress) public payable {
+        eCore = IElephanteumCore(coreAddress);     
     }
 
     function init(bytes32 name, bytes32 symbol, uint supply) public onlyOwner {

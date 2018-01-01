@@ -2,6 +2,7 @@ var Ownable = artifacts.require("Ownable");
 var ElephanteumCore = artifacts.require("ElephanteumCore");
 var ElephanteumStorage = artifacts.require("ElephanteumStorage");
 var ElephanteumAdvancedCore = artifacts.require("ElephanteumAdvancedCore");
+var ElephanteumProxy = artifacts.require("ElephanteumProxy");
 
 module.exports = async (deployer, network, accounts) => {
   const owner = accounts[0];
@@ -9,7 +10,8 @@ module.exports = async (deployer, network, accounts) => {
   deployer.link(Ownable, ElephanteumStorage);
   deployer.link(Ownable, ElephanteumCore);
   await deployer.deploy(ElephanteumStorage, { from: owner }); 
-  deployer.deploy(ElephanteumCore, ElephanteumStorage.address, { from: owner });
+  await deployer.deploy(ElephanteumCore, ElephanteumStorage.address, { from: owner });
   deployer.link(Ownable, ElephanteumAdvancedCore);
   deployer.deploy(ElephanteumAdvancedCore, ElephanteumStorage.address, { from: owner });
-};  
+  deployer.deploy(ElephanteumProxy, ElephanteumCore.address, { from: owner })
+};
