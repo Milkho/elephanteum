@@ -13,5 +13,6 @@ module.exports = async (deployer, network, accounts) => {
   await deployer.deploy(ElephanteumCore, ElephanteumStorage.address, { from: owner });
   deployer.link(Ownable, ElephanteumAdvancedCore);
   deployer.deploy(ElephanteumAdvancedCore, ElephanteumStorage.address, { from: owner });
+  deployer.link(Ownable, ElephanteumProxy);
   deployer.deploy(ElephanteumProxy, ElephanteumCore.address, { from: owner })
 };
