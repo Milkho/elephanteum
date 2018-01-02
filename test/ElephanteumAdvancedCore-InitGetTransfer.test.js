@@ -1,17 +1,17 @@
 const expectThrow = require('./heplers/expectThrow');
 
-const elephanteumCore = artifacts.require('ElephanteumCore');
+const elephanteumAdvancedCore = artifacts.require('ElephanteumAdvancedCore');
 const elephanteumStorage = artifacts.require('ElephanteumStorage');
 
 
-contract('ElephanteumCore', ([owner, user]) => {
+contract('ElephanteumAdvancedCore - initialization, getting and transfering elephants', ([owner, user]) => {
  
   let eCore, eStorage;
   const name = "Elephanteum", symbol = "EPH", supply = 100;
 
   before(async () => {
     eStorage = await elephanteumStorage.new();
-    eCore = await elephanteumCore.new(eStorage.address);
+    eCore = await elephanteumAdvancedCore.new(eStorage.address);
     await eStorage.transferOwnership(eCore.address);
     await eCore.init(name, symbol, supply);
   });
