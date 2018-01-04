@@ -20,6 +20,6 @@ module.exports = async (deployer, network, accounts) => {
   await deployer.deploy(LotsRegistry, Storage.address, "LotRegistry");
   await deployer.deploy(WithdrawalsRegistry, Storage.address, "WithdrawalRegistry");
   await deployer.deploy(ElephanteumRegistry, Storage.address, "ElephanteumRegistry");
-
   await deployer.deploy(ElephanteumController);
+  await deployer.deploy(ElephanteumProxy);
 };

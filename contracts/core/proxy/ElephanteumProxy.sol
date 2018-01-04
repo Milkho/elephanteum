@@ -2,16 +2,16 @@ pragma solidity ^0.4.18;
 
 
 import "../common/Ownable.sol";
-import "../controller/IElephanteumCore.sol";
-import "../storage/ElephanteumStorage.sol";
+import "../common/AddressChecker.sol";
+import "../controller/IElephanteumController.sol";
 
 
-contract ElephanteumProxy is Ownable {
+contract ElephanteumProxy is Ownable, AddressChecker {
 
-    IElephanteumCore public eCore;
+    IElephanteumController public eCore;
 
-    function ElephanteumProxy(address coreAddress) public payable {
-        eCore = IElephanteumCore(coreAddress);     
+    function setController(address coreAddress) notNull(coreAddress) public onlyOwner {
+        eCore = IElephanteumController(coreAddress);     
     }
 
     function init(bytes32 name, bytes32 symbol, uint supply) public onlyOwner {
@@ -50,7 +50,32 @@ contract ElephanteumProxy is Ownable {
         eCore.withdrawBid(msg.sender, elephantIndex);
     }
 
-    function transferStorage(address newCore) onlyOwner external {
-        eCore.transferStorage(newCore);
+    function getName() public view returns (bytes32) {
+        return eCore.getName();
     }
+
+    function getSymbol() public view returns (bytes32) {
+        return eCore.getSymbol();
+    }
+
+    function getTotalSupply() public view returns (uint) {
+        return eCore.getTotalSupply();
+    }
+
+    function getRemaining() public view returns (uint) {
+        return eCore.getRemaining();
+    }
+    
+    function getBid(uint _eIndex) public view returns (bool, address, uint) {
+        return eCore.getBid(_eIndex);
+    }
+
+    function getLot(uint _eIndex) public view returns (bool, address, uint, address) {
+        return eCore.getLot(_eIndex);
+    }
+
+    function getOwner(uint _eIndex) public view returns (address) {
+        return eCore.getOwner(_eIndex);
+    }
+
 }
