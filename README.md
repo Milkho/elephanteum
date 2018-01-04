@@ -6,11 +6,8 @@ When all elephants will be distributed, you can sell your elephants on auction w
 
 ## What's the point?
 
-This app is written to demostrate possibility of upgrading smart contracts in Solidity.   
-For this reason the app contains two controllers that can operate with one storage and proxy contract, which manages which contract has access to storage.  
-
-
-In order to show benefits of this architecture approach first controller called  _ElephanteumCore_   has functions that have security vulnerabities (they're open for [re-entrancy attacks](https://medium.com/@gus_tavo_guim/reentrancy-attack-on-smart-contracts-how-to-identify-the-exploitable-and-an-example-of-an-attack-4470a2d8dfe4)). In this time, other controller, called _ElephanteumAdvancedCore_ has fixed implementation. We can easily replace deployed controller that has vulnerabities by new one without needing to replace proxy contract. 
+This app is written to demostrate possibility of upgrading business logic in dapps while the storage remains the same.   
+You can found storage library original repository  [here](https://github.com/ChronoBank/solidity-storage-lib).
 
 ## How to test?
 
