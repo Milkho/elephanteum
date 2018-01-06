@@ -1,13 +1,10 @@
 pragma solidity ^0.4.18;
 
-import "../common/Ownable.sol";
-import "../common/AddressChecker.sol";
+import "./BaseRegistry.sol";
 import "../storage/StorageAdapter.sol";
 
 
-contract LotsRegistry is Ownable, AddressChecker, StorageAdapter {
-
-    address public controller;
+contract LotsRegistry is BaseRegistry, StorageAdapter {
 
     StorageInterface.UIntBoolMapping lotExist;
     StorageInterface.UIntUIntMapping minValue;     
@@ -25,18 +22,10 @@ contract LotsRegistry is Ownable, AddressChecker, StorageAdapter {
         onlySellTo.init("onlySellTo");
     }
 
-    function setController(address _controller)
-        public
-        onlyOwner
-        notNull(_controller)
-    {
-        controller = _controller;
-    }
-
     function setLot(uint _index, bool _lotExist, uint _minValue, address _onlySellTo)
         external
         onlyAllowed(controller) 
-    returns(bool) 
+        returns(bool) 
     {
         store.set(lotExist, _index, _lotExist);
         store.set(minValue, _index, _minValue);
@@ -47,7 +36,11 @@ contract LotsRegistry is Ownable, AddressChecker, StorageAdapter {
     }
 
 
-    function removeLot(uint _index) external onlyAllowed(controller) returns(bool) {
+    function removeLot(uint _index) 
+        external 
+        onlyAllowed(controller) 
+        returns(bool) 
+    {
         store.set(lotExist, _index, false);
         store.set(minValue, _index, uint(0));
         store.set(onlySellTo, _index, address(0));
@@ -59,7 +52,7 @@ contract LotsRegistry is Ownable, AddressChecker, StorageAdapter {
     function getLot(uint _index)
         external
         view
-    returns(bool, uint, address) 
+        returns(bool, uint, address) 
     {
         return (
             store.get(lotExist, _index),

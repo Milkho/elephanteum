@@ -1,13 +1,9 @@
 pragma solidity ^0.4.18;
 
-import "../common/Ownable.sol";
-import "../common/AddressChecker.sol";
+import "./BaseRegistry.sol";
 import "../storage/StorageAdapter.sol";
 
-
-contract ElephanteumRegistry is Ownable, AddressChecker, StorageAdapter {
-
-    address public controller;
+contract ElephanteumRegistry is BaseRegistry, StorageAdapter {
 
     StorageInterface.Bytes32 name;
     StorageInterface.Bytes32 symbol;
@@ -29,19 +25,11 @@ contract ElephanteumRegistry is Ownable, AddressChecker, StorageAdapter {
         elephantIndexToAddress.init("elephantIndexToAddress");
     }
 
-    function setController(address _controller)
-        public
-        onlyOwner
-        notNull(_controller)
-    {
-        controller = _controller;
-    }
-
 
     function setInitialData(bytes32 _name, bytes32 _symbol, uint _totalSupply)
         external
         onlyAllowed(controller) 
-    returns(bool) 
+        returns(bool) 
     {
         store.set(name, _name);
         store.set(symbol, _symbol);
@@ -53,7 +41,7 @@ contract ElephanteumRegistry is Ownable, AddressChecker, StorageAdapter {
     function setOwner(uint _index,  address _owner)
         external
         onlyAllowed(controller) 
-    returns(bool) 
+        returns(bool) 
     {
         store.set(elephantIndexToAddress, _index, _owner);
         
@@ -64,7 +52,7 @@ contract ElephanteumRegistry is Ownable, AddressChecker, StorageAdapter {
     function setRemaining(uint _remaining)
         external
         onlyAllowed(controller) 
-    returns(bool) 
+        returns(bool) 
     {
         store.set(elephantsRemainingToAssign,  _remaining);
         return true;

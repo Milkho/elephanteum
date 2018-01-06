@@ -1,14 +1,11 @@
 pragma solidity ^0.4.18;
 
-import "../common/Ownable.sol";
-import "../common/AddressChecker.sol";
+import "./BaseRegistry.sol";
 import "../storage/StorageAdapter.sol";
 
 
-contract WithdrawalsRegistry is Ownable, AddressChecker, StorageAdapter {
-
-    address public controller;
-
+contract WithdrawalsRegistry is BaseRegistry, StorageAdapter {
+    
     StorageInterface.AddressUIntMapping pendingWithdrawal;
 
     event WithdrawalReset(address _address);
@@ -21,29 +18,23 @@ contract WithdrawalsRegistry is Ownable, AddressChecker, StorageAdapter {
         pendingWithdrawal.init("pendingWithdrawal");
     }
 
-    function setController(address _controller)
-        public
-        onlyOwner
-        notNull(_controller)
-    {
-        controller = _controller;
-    }
-
     function setWithdrawal(address _address, uint _value)
         external
         onlyAllowed(controller) 
-    returns(bool) 
+        returns(bool) 
     {
         store.set(pendingWithdrawal, _address, _value);
-
         WithdrawalSet(_address, _value);
         return true;
     }
 
 
-    function resetWithdrawal(address _address) external onlyAllowed(controller) returns(bool) {
+    function resetWithdrawal(address _address) 
+        external 
+        onlyAllowed(controller) 
+        returns(bool) 
+    {
         store.set(pendingWithdrawal, _address, uint(0));
-
         WithdrawalReset(_address);
         return true;
     }
@@ -51,7 +42,7 @@ contract WithdrawalsRegistry is Ownable, AddressChecker, StorageAdapter {
     function getWithdrawal(address _address)
         external
         view
-    returns(uint) 
+        returns(uint) 
     {
         return (store.get(pendingWithdrawal, _address));
     }

@@ -1,13 +1,9 @@
 pragma solidity ^0.4.18;
 
-import "../common/Ownable.sol";
-import "../common/AddressChecker.sol";
+import "./BaseRegistry.sol";
 import "../storage/StorageAdapter.sol";
 
-
-contract BidsRegistry is Ownable, AddressChecker, StorageAdapter {
-
-    address public controller;
+contract BidsRegistry is BaseRegistry, StorageAdapter {
 
     StorageInterface.UIntBoolMapping bidExist;
     StorageInterface.UIntAddressMapping bidder;
@@ -25,18 +21,10 @@ contract BidsRegistry is Ownable, AddressChecker, StorageAdapter {
         value.init("value");
     }
 
-    function setController(address _controller)
-        public
-        onlyOwner
-        notNull(_controller)
-    {
-        controller = _controller;
-    }
-
     function setBid(uint _index, bool _bidExist, address _bidder, uint _value)
         external
         onlyAllowed(controller) 
-    returns(bool) 
+        returns(bool) 
     {
         store.set(bidExist, _index, _bidExist);
         store.set(bidder, _index, _bidder);
@@ -46,8 +34,11 @@ contract BidsRegistry is Ownable, AddressChecker, StorageAdapter {
         return true;
     }
 
-
-    function removeBid(uint _index) external  onlyAllowed(controller) returns(bool) {
+    function removeBid(uint _index) 
+        external  
+        onlyAllowed(controller) 
+        returns(bool) 
+    {
         store.set(bidExist, _index, false);
         store.set(bidder, _index, address(0));
         store.set(value, _index, uint(0));
@@ -59,7 +50,7 @@ contract BidsRegistry is Ownable, AddressChecker, StorageAdapter {
     function getBid(uint _index)
         external
         view
-    returns(bool, address, uint) 
+        returns(bool, address, uint) 
     {
         return (
             store.get(bidExist, _index),
