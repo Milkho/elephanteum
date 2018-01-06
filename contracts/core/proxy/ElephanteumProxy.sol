@@ -70,7 +70,7 @@ contract ElephanteumProxy is Ownable, AddressChecker {
         return eCore.getBid(_eIndex);
     }
 
-    function getLot(uint _eIndex) public view returns (bool, address, uint, address) {
+    function getLot(uint _eIndex) public view returns (bool, uint, address) {
         return eCore.getLot(_eIndex);
     }
 

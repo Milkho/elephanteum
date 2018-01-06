@@ -25,7 +25,7 @@ interface IElephanteumController {
     function getRemaining() external view returns (uint);
     
     function getBid(uint _eIndex) external view returns (bool, address, uint);
-    function getLot(uint _eIndex) external view returns (bool, address, uint, address);
+    function getLot(uint _eIndex) external view returns (bool, uint, address);
     function getOwner(uint _eIndex) external view returns (address);
  
 
