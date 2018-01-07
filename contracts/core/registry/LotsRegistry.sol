@@ -11,7 +11,7 @@ contract LotsRegistry is BaseRegistry, StorageAdapter {
     StorageInterface.UIntAddressMapping onlySellTo;
 
     event LotRemoved(uint _index);
-    event LotSet(uint _index, bool _lotExist, uint _minValue, address _onlySellTo);
+    event LotSet(uint _index, uint _minValue, address _onlySellTo);
 
     function LotsRegistry(Storage _store, bytes32 _crate)
         StorageAdapter(_store, _crate)
@@ -22,16 +22,16 @@ contract LotsRegistry is BaseRegistry, StorageAdapter {
         onlySellTo.init("onlySellTo");
     }
 
-    function setLot(uint _index, bool _lotExist, uint _minValue, address _onlySellTo)
+    function setLot(uint _index, uint _minValue, address _onlySellTo)
         external
         onlyAllowed(controller) 
         returns(bool) 
     {
-        store.set(lotExist, _index, _lotExist);
+        store.set(lotExist, _index, true);
         store.set(minValue, _index, _minValue);
         store.set(onlySellTo, _index, _onlySellTo);
         
-        LotSet(_index, _lotExist, _minValue, _onlySellTo);
+        LotSet(_index, _minValue, _onlySellTo);
         return true;
     }
 

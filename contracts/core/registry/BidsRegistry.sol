@@ -10,7 +10,7 @@ contract BidsRegistry is BaseRegistry, StorageAdapter {
     StorageInterface.UIntUIntMapping value;     
 
     event BidRemoved(uint _index);
-    event BidSet(uint _index, bool _bidExist, address _bidder, uint _value);
+    event BidSet(uint _index, address _bidder, uint _value);
 
     function BidsRegistry(Storage _store, bytes32 _crate)
         StorageAdapter(_store, _crate)
@@ -21,16 +21,16 @@ contract BidsRegistry is BaseRegistry, StorageAdapter {
         value.init("value");
     }
 
-    function setBid(uint _index, bool _bidExist, address _bidder, uint _value)
+    function setBid(uint _index, address _bidder, uint _value)
         external
         onlyAllowed(controller) 
         returns(bool) 
     {
-        store.set(bidExist, _index, _bidExist);
+        store.set(bidExist, _index, true);
         store.set(bidder, _index, _bidder);
         store.set(value, _index, _value);
 
-        BidSet(_index, _bidExist, _bidder, _value);
+        BidSet(_index, _bidder, _value);
         return true;
     }
 

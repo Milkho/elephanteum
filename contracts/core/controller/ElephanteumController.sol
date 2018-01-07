@@ -5,13 +5,13 @@ import "../common/AddressChecker.sol";
 import "./IElephanteumController.sol";
 
 interface IBidsRegistry  {
-    function setBid(uint _index, bool _bidExist, address _bidder, uint _value) external returns(bool);
+    function setBid(uint _index, address _bidder, uint _value) external returns(bool);
     function removeBid(uint _index) external returns(bool);
     function getBid(uint _index) external view returns(bool, address, uint);
 }
 
 interface ILotsRegistry  {
-    function setLot(uint _index, bool _lotExist, uint _minValue, address _onlySellTo) external returns(bool);   
+    function setLot(uint _index, uint _minValue, address _onlySellTo) external returns(bool);   
     function removeLot(uint _index) external returns(bool);
     function getLot(uint _index) external view returns(bool, uint, address);
 }
@@ -148,7 +148,7 @@ contract ElephanteumController is Ownable, AddressChecker {
         belongsToSender(elephantIndex, from) 
         validIndex(elephantIndex)
     {
-        lotsRegistry.setLot(elephantIndex, true, minPrice, to);
+        lotsRegistry.setLot(elephantIndex, minPrice, to);
         ElephantOffered(elephantIndex, minPrice, to);
     }
 
@@ -191,17 +191,10 @@ contract ElephanteumController is Ownable, AddressChecker {
         if (bidValue != uint(0))
             withdrawalRegistry.setWithdrawal(bidBidder, withdrawalRegistry.getWithdrawal(bidBidder) + bidValue);
             
-        bidsRegistry.setBid(elephantIndex, true, from, msg.value);
+        bidsRegistry.setBid(elephantIndex, from, msg.value);
         BidEntered(elephantIndex, msg.value, from);
     }
-/*
-    function processBid(uint endex) internal {
-        bool bidHasBid;
-        address bidBidder;
-        uint bidValue;
-        (bidHasBid, bidBidder, bidValue) = bidsRegistry.getBid(elephantIndex);
-    }*/
-
+    
     function acceptBid(address seller, uint elephantIndex, uint minPrice) 
         onlyAllowed(proxy) 
         allElephantsAssigned
