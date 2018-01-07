@@ -6,8 +6,7 @@ When all elephants will be distributed, you can sell your elephants on auction w
 
 ## What's the point?
 
-This app is written to demostrate possibility of upgrading business logic in dapps while the storage remains the same.   
-You can found storage library original repository  [here](https://github.com/ChronoBank/solidity-storage-lib).
+This app is written to demostrate possibility of upgrading business logic in dapps while the storage remains the same. 
 
 ## How to test?
 
@@ -17,6 +16,10 @@ Start TestRPC by running
 
      testrpc   
      
-And launch tests by running from the app dir
+And launch all tests by running from the app dir
 
      truffle test --network testrpc --reset --compile
+
+Also, you can launch concrete test file
+
+     truffle test test/<<test_file_name.test.js>> --network testrpc --reset --compile
