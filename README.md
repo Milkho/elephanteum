@@ -20,6 +20,6 @@ And launch all tests by running from the app dir
 
      truffle test --network testrpc --reset --compile
 
-Also, you can launch concrete test file
+Also, you can launch specific test file
 
-     truffle test test/<<test_file_name.test.js>> --network testrpc --reset --compile
+     truffle test test/<test_file_name>.test.js --network testrpc --reset --compile
