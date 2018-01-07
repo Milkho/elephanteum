@@ -1,6 +1,5 @@
 const expectThrow = require('./heplers/expectThrow');
 const setup = require('./heplers/setup'); 
-
 const elephanteumProxy = artifacts.require('ElephanteumProxy');
 
 contract('ElephanteumProxy - bidding, accepting bids', ([owner, user1, user2]) => {

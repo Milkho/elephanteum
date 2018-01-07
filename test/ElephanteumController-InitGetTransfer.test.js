@@ -4,7 +4,7 @@ const setup = require('./heplers/setup');
 contract('ElephanteumController - initialization, getting and transfering elephants', ([owner, user]) => {
  
   const name = "Elephanteum", symbol = "EPH", supply = 100;
-  let eCore, eStorage;
+  let eCore;
  
   before(async () => {
     eCore = await setup([owner]);

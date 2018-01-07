@@ -8,7 +8,7 @@ contract('StorageAccessManager', accounts => {
 
     let aManager, mockReg;
 
-    before('setup', async () => {
+    before(async () => {
         store = await storage.new();
         aManager = await accessManager.new();
         mockReg = await mockRegistry.new(store.address, "RegistryMock");

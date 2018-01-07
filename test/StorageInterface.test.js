@@ -2,11 +2,11 @@ const storage =  artifacts.require('Storage');
 const mockRegistry = artifacts.require('RegistryMock');
 const accessManager = artifacts.require("StorageAccessManager");
 
-contract('StorageInterface', accounts => {
+contract('StorageInterace', accounts => {
 
-    let store, mockReg;
+    let mockReg;
 
-    before('setup', async () => {
+    before(async () => {
         store = await storage.new();
         let aManager = await accessManager.new();
         mockReg = await mockRegistry.new(store.address, "RegistryMock");

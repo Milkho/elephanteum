@@ -3,9 +3,9 @@ const setup = require('./heplers/setup');
 const compareBalances = require('./heplers/compareBalances');
 
 
-contract('ElephanteumAdvancedCore - withrawing', ([owner, user1, user2]) => {
+contract('ElephanteumController - withrawing', ([owner, user1, user2]) => {
  
-  let eCore, eStorage;
+  let eCore;
   const name = "Elephanteum", symbol = "EPH", supply = 1;
 
   before(async () => {
